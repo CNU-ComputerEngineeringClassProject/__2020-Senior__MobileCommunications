@@ -29,8 +29,8 @@ CSCTPLayer::~CSCTPLayer()
 void CSCTPLayer::ResetHeader()
 {
 	// begin: 알맞은 값을 채우시오
-	m_sHeader.sctp_srcport = htons(0000);
-	m_sHeader.sctp_dstport = htons(0000); // 목적 포트
+	m_sHeader.sctp_srcport = htons(7977);
+	m_sHeader.sctp_dstport = htons(5630); // 목적 포트
 	// end
 
 	m_sHeader.sctp_verif_tag[0] = 0x00;
@@ -77,8 +77,8 @@ void CSCTPLayer::SetChunkData(int nlength)
 	m_sChunk.chunk_type = 0x00; // DATA (0), INIT (1)
 
 	// begin: 알맞은 값을 채우시오
-	m_sChunk.chunk_length = ntohs(0);
-	m_sChunk.chunk_pid = htonl(0x00000000);
+	m_sChunk.chunk_length = ntohs(CHUNK_HEADER_SIZE+ CHUNK_DATA_SIZE+nlength);
+	m_sChunk.chunk_pid = htonl(0x00000012);
 	// end
 
 	m_sChunk.chunk_sid = htons(0x0001);
@@ -108,7 +108,7 @@ BOOL CSCTPLayer::Send(u_char* ppayload, int nlength)
 	}
 
 	// begin: 알맞은 값을 채우시오
-	int packet_length = 0 + nlength + cLength; /* + [SCTP PACKET TOTAL SIZE] */
+	int packet_length = SCTP_HEADER_SIZE + CHUNK_HEADER_SIZE + CHUNK_DATA_SIZE + nlength + cLength; /* + [SCTP PACKET TOTAL SIZE] */
 	// end
 
 	BOOL bSuccess = FALSE ;
