@@ -1,1 +1,3 @@
-# __2020-Senior__MobileCommunications
+# 2020 MobileCommunications
+### Team Project
+### Implementing LTE Attach Procedure
