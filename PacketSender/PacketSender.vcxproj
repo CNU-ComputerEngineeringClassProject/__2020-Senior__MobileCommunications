@@ -14,7 +14,6 @@
     <ProjectGuid>{8B589333-1366-4654-8FC7-FF165FFE9875}</ProjectGuid>
     <RootNamespace>PacketSender</RootNamespace>
     <Keyword>MFCProj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,8 +43,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\WinPcap\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(LibraryPath)</IncludePath>
-    <LibraryPath>D:\WinPcap\Lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\cse\WpdPack\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(LibraryPath);$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\cse\WpdPack\Lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
