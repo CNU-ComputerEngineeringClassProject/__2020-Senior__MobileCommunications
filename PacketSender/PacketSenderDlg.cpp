@@ -306,9 +306,9 @@ BOOL CPacketSenderDlg::Receive(u_char* ppayload)
 		length = 32;
 
 		// begin: 알맞은 값을 채우시오
-		memcpy(spayload, "\0", length); // 보낼 메시지 패킷 데이터 (현재 파일 아래 함수 호출)
-		m_S1AP->SetMessageType(0); // 보낼 메시지 타입
-		m_S1AP->SetTheNumberOfItems(0); // 보낼 메시지의 아이템 개수
+		memcpy(spayload, initialContextSetupResponseItems(), length); // 보낼 메시지 패킷 데이터 (현재 파일 아래 함수 호출)
+		m_S1AP->SetMessageType(S1AP_MSG_TYPE_ATTACH_COMPLETE1); // 보낼 메시지 타입
+		m_S1AP->SetTheNumberOfItems((char)3); // 보낼 메시지의 아이템 개수
 		// end
 
 		Send(spayload, length);
@@ -317,9 +317,9 @@ BOOL CPacketSenderDlg::Receive(u_char* ppayload)
 		length = 53;
 
 		// begin: 알맞은 값을 채우시오
-		memcpy(spayload, "\0", length); // 보낼 메시지 패킷 데이터 (현재 파일 아래 함수 호출)
-		m_S1AP->SetMessageType(0); // 보낼 메시지 타입
-		m_S1AP->SetTheNumberOfItems(0); // 보낼 메시지의 아이템 개수
+		memcpy(spayload, attachCompleteItems(), length); // 보낼 메시지 패킷 데이터 (현재 파일 아래 함수 호출)
+		m_S1AP->SetMessageType(S1AP_MSG_TYPE_ATTACH_COMPLETE2); // 보낼 메시지 타입
+		m_S1AP->SetTheNumberOfItems((char)5); // 보낼 메시지의 아이템 개수
 		// end
 		break;
 	default:
@@ -494,7 +494,6 @@ u_char* CPacketSenderDlg::initialContextSetupRequestAttachAcceptItems()
 u_char* CPacketSenderDlg::authenticationRspItems()
 {
 	u_char temp[64] = {
-		/****주석과제2****/
 
 		// item0 id-MME-UE-S1AP-ID
 		0x00,0x00,0x00,0x03,0x40,0x12,0x86
@@ -518,7 +517,15 @@ u_char* CPacketSenderDlg::authenticationRspItems()
 u_char*	CPacketSenderDlg::initialContextSetupResponseItems()
 {
 	u_char temp[33] = {
-		0
+
+		// item0 id-MME-UE-S1AP-ID
+		0x00,0x00,0x00,0x03,0x40,0x12,0x86
+
+		// Item1 id-eNB-UE-S1AP-ID
+		,0x00,0x08,0x00,0x02,0x00,0x00
+
+		// Item2 id-E-RABSetupListCtxtSURes
+		,0x00,0x33,0x40,0x0f,0x00,0x00,0x32,0x40,0x0a,0x0a,0x1f,0x04,0x05,0x01,0x11,0x01,0x00,0x00,0x0a
 	};
 
 	return temp;
@@ -527,7 +534,20 @@ u_char*	CPacketSenderDlg::initialContextSetupResponseItems()
 u_char*	CPacketSenderDlg::attachCompleteItems()
 {
 	u_char temp[57] = {
-		0
+		// item0 id-MME-UE-S1AP-ID
+		0x00,0x00,0x00,0x03,0x40,0x12,0x86
+
+		// Item1 id-eNB-UE-S1AP-ID
+		,0x00,0x08,0x00,0x02,0x00,0x00
+
+		// Item2 id-NAS-PDU
+		,0x00,0x1a,0x00,0x0e,0x0d,0x27,0x40,0x73,0x5f,0x51,0x02,0x07,0x43,0x00,0x03,0x52,0x00,0xc2
+
+		// Item3 id-EUTRAN-CGI
+		,0x00,0x64,0x40,0x08,0x00,0x54,0xf0,0x60,0x00,0x00,0x10,0xe0
+
+		// Item4 id-TAI
+		,0x00,0x43,0x40,0x06,0x00,0x54,0xf0,0x60,0x01,0xf4
 	};
 
 	return temp;
